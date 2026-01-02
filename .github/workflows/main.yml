@@ -1,0 +1,3 @@
+steps:
+  - name: Greet user
+    run: echo "Hello, ${{ github.actor }}!"
