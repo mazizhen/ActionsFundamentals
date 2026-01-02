@@ -15,7 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log User Input
+        env:
+          HELLO: ${{ secrets.HELLO }}
+          VAR01: ${{ vars.VAR01 }}
+          VAR02: ${{ vars.VAR02 }}
         run: |
           echo "Run started by: ${{ github.actor }}"
           echo "Reason: ${{ github.event.inputs.reason }}"
           echo "Environment: ${{ github.event.inputs.environment }}"
+
+          echo "Replace HELLO with" $HELLO
+          echo "Replace VAR01 with" $VAR01
+          echo "Replace VAR02 with" $VAR02
