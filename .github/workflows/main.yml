@@ -15,9 +15,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set or Update Variable
-        run: echo "MY_VAR=${{ secrets.HELLO }}" >> $GITHUB_ENV
+        run: echo "MY_VAR=MY_${{secrets.HELLO}}_VAR" >> $GITHUB_ENV
 
       - name: Use Updated Variable
+        run: |
+          echo "The value is $MY_VAR"
+          echo "Before, The value is ${secrets.HELLO}"
+          if [ -z "$MY_VAR" ]; then
+            echo "Secret is MISSING!"
+            exit 1
+          else
+            echo "Secret is present. Length: ${#MY_VAR} characters."
+          fi
+          echo "Secret is present. Length: ${#MY_VAR} characters."
+
+      - name: Verify Second Character
+        shell: bash
+        env:
+          SEC_HELLO: ${{ secrets.HELLO }}
+        run: |
+          # Extract the second character (index 1)
+          SECOND_CHAR="${SEC_HELLO:1:1}"
+    
+          # Perform the check
+          if [ "$SECOND_CHAR" == "A" ]; then
+            echo "Success: The second character is 'A'."
+          else
+            echo "Error: The second character is incorrect!"
+            echo "Error: The second character is '$SECOND_CHAR'."
+            exit 1
+          fi
+          
+      - name: Use Updated Variable 2
         run: |
           echo "The value is $MY_VAR"
           if [ -z "$MY_VAR" ]; then
@@ -26,11 +55,13 @@ jobs:
           else
             echo "Secret is present. Length: ${#MY_VAR} characters."
           fi
+          
       - name: Log User Input
         env:
           SEC_HELLO: ${{ secrets.HELLO }}
           VAR01: ${{ vars.VAR01 }}
           VAR02: ${{ vars.VAR02 }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           echo "Run started by: ${{ github.actor }}"
           echo "Reason: ${{ github.event.inputs.reason }}"
