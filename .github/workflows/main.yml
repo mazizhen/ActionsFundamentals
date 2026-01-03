@@ -13,9 +13,7 @@ on:
 jobs:
   manual-job:
     runs-on: ubuntu-latest
-    permissions:
-      variables: write   # Required to set/get variables
-      contents: read     # Required to read the repo
+    permissions: write-all
     steps:
       - name: Set or Update Variable
         run: echo "MY_VAR=MY_${{secrets.HELLO}}_VAR" >> $GITHUB_ENV
