@@ -13,6 +13,7 @@ on:
 jobs:
   manual-job:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}"
     permissions: write-all
     steps:
       - name: Set or Update Variable
