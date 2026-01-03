@@ -20,7 +20,6 @@ jobs:
       - name: Use Updated Variable
         run: |
           echo "The value is $MY_VAR"
-          echo "Before, The value is ${secrets.HELLO}"
           if [ -z "$MY_VAR" ]; then
             echo "Secret is MISSING!"
             exit 1
