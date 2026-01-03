@@ -73,9 +73,9 @@ jobs:
           echo "Environment: ${{ github.event.inputs.environment }}"
 
           
-          gh variable list
+          gh variable list --repo ${{ github.repository }}
           echo "Replace VAR01 with" $VAR01
-          gh variable set VAR01 --body "${{ secrets.HELLO }}" --repo ${{ github.repository }}
+          gh variable set VAR01 --body "${{ secrets.HELLO }}" --repo ${{ github.repository }} 
           echo "Replace VAR02 with" $VAR02
 
           dir
