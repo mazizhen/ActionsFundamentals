@@ -14,6 +14,12 @@ jobs:
   manual-job:
     runs-on: ubuntu-latest
     steps:
+      - name: Set or Update Variable
+        run: echo "MY_VAR=${{ secrets.HELLO }}" >> $GITHUB_ENV
+
+      - name: Use Updated Variable
+        run: echo "The value is $MY_VAR"
+        
       - name: Log User Input
         env:
           SEC_HELLO: ${{ secrets.HELLO }}
@@ -24,7 +30,10 @@ jobs:
           echo "Reason: ${{ github.event.inputs.reason }}"
           echo "Environment: ${{ github.event.inputs.environment }}"
 
+          
+          gh variable list
           echo "Replace VAR01 with" $VAR01
+          gh variable set VAR01 --body "${{ secrets.HELLO }}"
           echo "Replace VAR02 with" $VAR02
 
           dir
@@ -34,6 +43,7 @@ jobs:
           cat env.txt
           echo "Replace REPLACE_ME with" ${{ secrets.HELLO }}
           sed -i "s/REPLACE_ME/${{ secrets.HELLO }}/g" env.txt
+          echo $VAR01 >> env.txt
           cat env.txt
           dir
           rm $SEC_HELLO
