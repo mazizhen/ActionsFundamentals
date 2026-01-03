@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Log User Input
         env:
-          HELLO: ${{ secrets.HELLO }}
+          SEC_HELLO: ${{ secrets.HELLO }}
           VAR01: ${{ vars.VAR01 }}
           VAR02: ${{ vars.VAR02 }}
         run: |
@@ -24,6 +24,17 @@ jobs:
           echo "Reason: ${{ github.event.inputs.reason }}"
           echo "Environment: ${{ github.event.inputs.environment }}"
 
-          echo "Replace HELLO with" $HELLO
           echo "Replace VAR01 with" $VAR01
           echo "Replace VAR02 with" $VAR02
+
+          dir
+          touch ${{ secrets.HELLO }}
+          touch $SEC_HELLO
+          echo "REPLACE_ME" > env.txt
+          cat env.txt
+          echo "Replace REPLACE_ME with" ${{ secrets.HELLO }}
+          sed -i "s/REPLACE_ME/${{ secrets.HELLO }}/g" env.txt
+          cat env.txt
+          dir
+          rm $SEC_HELLO
+          dir
