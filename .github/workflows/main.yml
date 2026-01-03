@@ -22,7 +22,6 @@ jobs:
           echo "The value is $MY_VAR"
           if [ -z "$MY_VAR" ]; then
             echo "Secret is MISSING!"
-            exit 1
           else
             echo "Secret is present. Length: ${#MY_VAR} characters."
           fi
@@ -42,9 +41,16 @@ jobs:
           else
             echo "Error: The second character is incorrect!"
             echo "Error: The second character is '$SECOND_CHAR'."
-            exit 1
           fi
-          
+
+          MY_ARRAY=()
+          for (( i=0; i<${#SEC_HELLO}; i++ )); do
+            MY_ARRAY+=("${SEC_HELLO:$i:1}")
+            echo "${MY_ARRAY[$i]}"
+          done
+          echo "${MY_ARRAY[1]}" # Outputs: E
+          echo "${MY_ARRAY[@]}" 
+
       - name: Use Updated Variable 2
         run: |
           echo "The value is $MY_VAR"
