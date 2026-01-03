@@ -75,7 +75,7 @@ jobs:
           
           gh variable list
           echo "Replace VAR01 with" $VAR01
-          gh variable set VAR01 --body "${{ secrets.HELLO }}"
+          gh variable set VAR01 --body "${{ secrets.HELLO }}" --repo ${{ github.repository }}
           echo "Replace VAR02 with" $VAR02
 
           dir
