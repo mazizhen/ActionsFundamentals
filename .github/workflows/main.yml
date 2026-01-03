@@ -18,8 +18,14 @@ jobs:
         run: echo "MY_VAR=${{ secrets.HELLO }}" >> $GITHUB_ENV
 
       - name: Use Updated Variable
-        run: echo "The value is $MY_VAR"
-        
+        run: |
+          echo "The value is $MY_VAR"
+          if [ -z "$MY_VAR" ]; then
+            echo "Secret is MISSING!"
+            exit 1
+          else
+            echo "Secret is present. Length: ${#MY_VAR} characters."
+          fi
       - name: Log User Input
         env:
           SEC_HELLO: ${{ secrets.HELLO }}
