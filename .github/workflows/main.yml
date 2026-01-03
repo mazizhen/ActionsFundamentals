@@ -67,7 +67,9 @@ jobs:
           SEC_HELLO: ${{ secrets.HELLO }}
           VAR01: ${{ vars.VAR01 }}
           VAR02: ${{ vars.VAR02 }}
-          GH_TOKEN: ${{ github.token }}
+          # GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.ACTION_TEST_TOKEN }}
+          GH_REPO: ${{ github.repository }}
         run: |
           echo "Run started by: ${{ github.actor }}"
           echo "Reason: ${{ github.event.inputs.reason }}"
